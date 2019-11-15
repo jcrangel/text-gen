@@ -1,0 +1,5 @@
+#ignore
+*.h5
+*.hdf5
+*.txt
+__pycache__
