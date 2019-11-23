@@ -104,10 +104,11 @@ def insert_words_list(words,list_sentences):
     --->>
     'God ra was about to show him the holy temple in heaven in vision'
     """
-
-
+    # import pdb; pdb.set_trace()
     for i,sentence in enumerate(list_sentences):
-        list_sentences[i] = insert_word(words,list_sentences[i])
+        list_sentences[i] = insert_words(words,replace_nonalphanum(sentence).lower())
+           
+    return list_sentences
 
 
 def insert_words(words,sentence):
@@ -122,13 +123,13 @@ def insert_words(words,sentence):
     w  = list(words)
     iw = -1
     for i,word in enumerate(words):
-        index = sentence.find(word)
+        index = sentence.find(word + ' ')
         #if found delete word from w
         if index != -1:
             w.remove(word)
             iw = index
-    print(iw)
-    print(w)
+    # print(iw)
+    # print(w)
     #all found return the same sentence        
     if len(w) == 0:
         return sentence
@@ -137,4 +138,5 @@ def insert_words(words,sentence):
         return sentence
 
 
-
+def replace_nonalphanum(sentence):
+    return re.sub('[^0-9a-zA-z]+', ' ',sentence)
