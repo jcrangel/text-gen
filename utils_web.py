@@ -208,7 +208,9 @@ def scrap_for_kanji_radicals(words_map, words_file,list_proxies=None,time_w=5):
     column = 'kanji-meaning'
     total = data_df.shape[0]
     num_proxy = 0
-    proxy = list_proxies[num_proxy]  
+    proxy = list_proxies[num_proxy]
+    num_saved_words = 0
+    file_words_temp = 'temp_radical_to_sentences.pkl'  
     for index,row in data_df.iterrows():
 
         for radical in row[column].split(','):
@@ -228,6 +230,11 @@ def scrap_for_kanji_radicals(words_map, words_file,list_proxies=None,time_w=5):
                 #If got something
                 if res_sentences is not None:
                     words_map[radical] = res_sentences
+                    num_saved_words += 1
+                    #save each the words
+                    if num_saved_words % 5 == 0 :
+                        print('Saving words in ', file_words_temp)
+                        save_map(file_words_temp,words_map)
                     break
                 # if fail...
                 if num_proxy >= len(list_proxies):
