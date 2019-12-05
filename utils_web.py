@@ -19,8 +19,7 @@ def simple_get(url,proxy=None):
     If the content-type of response is some kind of HTML/XML, return the
     text content, otherwise return None.
     """
-    headers = {'User-Agent': 'Mozilla/5.0 (Macintosh;\
-     Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0'}
     proxy_par = {"http":proxy,"https":proxy} if proxy is not None else proxy
     try:
         with closing(get(url, stream=True,\
@@ -232,9 +231,9 @@ def scrap_for_kanji_radicals(words_map, words_file,list_proxies=None,time_w=5):
                     words_map[radical] = res_sentences
                     num_saved_words += 1
                     #save each the words
-                    if num_saved_words % 5 == 0 :
-                        print('Saving words in ', file_words_temp)
-                        save_map(file_words_temp,words_map)
+#                     if num_saved_words % 5 == 0 :
+#                         print('Saving words in ', file_words_temp)
+                    save_map(file_words_temp,words_map)
                     break
                 # if fail...
                 if num_proxy >= len(list_proxies):
@@ -282,5 +281,24 @@ def get_proxies2():
             proxies.append(td_list[0].text+':'+td_list[1].text)
         except:
             continue
+
+    return proxies
+
+
+def get_proxies4():
+
+    proxies = []
+    with open('data/proxy_list2.txt') as fp:
+        line = fp.readline()
+        c = 1
+        line = line.split('\n')[0]
+        proxies.append(line)
+        while line:
+            line = fp.readline()
+            line = line.split('\n')[0]
+            c += 1
+            proxies.append(line)
+
+
 
     return proxies
